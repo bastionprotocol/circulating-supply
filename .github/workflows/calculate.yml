@@ -14,8 +14,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "16.x"
-      - run: npm run typechain
       - run: npm install
+      - run: npm run typechain
       - run: npm start
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
