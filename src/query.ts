@@ -3,6 +3,10 @@ import { fromBn } from "evm-bn";
 import { ERC20, ERC20__factory } from "../typechain";
 import "dotenv/config";
 
+if (!("ETH_RPC_URL" in process.env)) {
+  throw new Error("ETH RPC Not Found");
+}
+
 const BASTION_AURORA_TREASURY_GNOSIS =
   "0x7DB96909Da3fAbaB6c7Ee2c97c4F98221d583530";
 
