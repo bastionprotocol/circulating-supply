@@ -10,17 +10,22 @@ const octokit = new Octokit({
 });
 
 async function service() {
-  const data = await octokit.request(
+  const { data: circulatingSupply } = await octokit.request(
     "GET /repos/{owner}/{repo}/contents/{path}",
     {
       owner: "bastionprotocol",
       repo: "circulating-supply",
-      path: "package.json",
-      message: "",
-      content: "",
+      path: "result/circulating",
     }
   );
-  console.log("data", data);
+
+  const res = Buffer.from(
+    //@ts-ignore
+    circulatingSupply.content,
+    "base64"
+  ).toString();
+  console.log("res", res);
+  //   const circulating = Buffer.from(circulatingResponse.content);
 }
 
 service();
