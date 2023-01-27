@@ -1,31 +1,28 @@
 import "dotenv/config";
 import { Octokit } from "octokit";
+import { createOrUpdateTextFile } from "@octokit/plugin-create-or-update-text-file";
+import query from "./query";
 
 if (!("GH_TOKEN" in process.env)) {
   throw new Error("GH Token Not Found");
 }
 
-const octokit = new Octokit({
+const MyOctokit = Octokit.plugin(createOrUpdateTextFile);
+
+const octokit = new MyOctokit({
   auth: process.env["GH_TOKEN"],
 });
 
 async function service() {
-  const { data: circulatingSupply } = await octokit.request(
-    "GET /repos/{owner}/{repo}/contents/{path}",
-    {
-      owner: "bastionprotocol",
-      repo: "circulating-supply",
-      path: "result/circulating",
-    }
-  );
-
-  const res = Buffer.from(
-    //@ts-ignore
-    circulatingSupply.content,
-    "base64"
-  ).toString();
-  console.log("res", res);
-  //   const circulating = Buffer.from(circulatingResponse.content);
+  const newCiculatingSupply = await query();
+  const timestamp = ~~(Date.now() / 1000);
+  await octokit.createOrUpdateTextFile({
+    owner: "bastionprotocol",
+    repo: "circulating-supply",
+    path: "result/circulating",
+    content: newCiculatingSupply.toString(),
+    message: `chore: update circulating supply timestamp: ${timestamp}`,
+  });
 }
 
 service();
