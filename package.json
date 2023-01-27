@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "ts-node src/service.ts",
     "typechain": "typechain --target ethers-v5 --out-dir typechain abi/*"
   },
   "keywords": [],
@@ -16,6 +17,7 @@
     "ethers": "^5.7.2",
     "evm-bn": "^1.1.2",
     "octokit": "^2.0.14",
+    "ts-node": "^10.9.1",
     "typechain": "^8.1.1",
     "typescript": "^4.9.4"
   }
