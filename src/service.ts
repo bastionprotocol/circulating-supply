@@ -25,4 +25,6 @@ async function service() {
   });
 }
 
-service();
+setInterval(() => {
+  service();
+}, 1000 * 60 * 10);
