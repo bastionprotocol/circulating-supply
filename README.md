@@ -6,6 +6,8 @@
 
 ## Circulating Supply
 
+Circulating supply in `result/circulating` is getting updated every 10 minutes by bot that use the code in this repository.
+
 Calculated from subtracting the following from total supply of 5,000,000,000
 
 - Seed investors vested amount
