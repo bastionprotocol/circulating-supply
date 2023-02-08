@@ -20,6 +20,8 @@ const VC_SEED = 200000000;
 const ANGEL_INVESTOR_SERIES_A = 49125000;
 const VC_SERIES_A = 512500000;
 
+const INVESTOR_STILL_IN_BASTION_ETH_GNOSIS = 158200000;
+
 const totalSupply = 5000000000;
 const investorSupply =
   ANGEL_INVESTOR_SEED + VC_SEED + ANGEL_INVESTOR_SERIES_A + VC_SERIES_A;
@@ -58,7 +60,9 @@ export default async function query() {
     BASTION_AURORA_TREASURY_GNOSIS,
     "AURORA"
   );
-  const bengineEthGnosisBalance = await balanceOf(BASTION_ETH_GNOSIS, "ETH");
+  const bengineEthGnosisBalance =
+    (await balanceOf(BASTION_ETH_GNOSIS, "ETH")) -
+    INVESTOR_STILL_IN_BASTION_ETH_GNOSIS;
   const now = ~~(Date.now() / 1000);
   const elapsed = (now - vestingStart) / duration;
   const vested = investorSupply * (1 - elapsed);
@@ -68,5 +72,6 @@ export default async function query() {
     vested -
     bastionAuroraTreasuryGnosisBalance -
     bengineEthGnosisBalance;
+
   return circulating;
 }
